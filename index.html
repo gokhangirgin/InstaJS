@@ -1,0 +1,55 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+<title>InstaJS Test</title>
+<script type="text/javascript" src="InstaJS.js"></script>
+<script type="text/javascript">
+	window.onload = function(){
+		var auth = new InstaOAuth({ client_id : "04dc199dce2e40a285f129bbcc33b87f",
+				redirect_uri:encodeURIComponent("http://localhost"),
+				scope:"basic+likes", result: function(token){
+					console.log(token);
+					
+					var api = new InstaJS({ access_token:token });
+					console.log(api.Token); //token details...
+					api.Users.Search({q:"girgin",result:function(d){
+						console.log("Search users");
+						console.log(d);
+					}});
+					
+					api.Media.Popular({count:50,result:function(data){
+						console.log("Popular media on Instagram");
+						console.log(data);
+					}});
+					api.Tags.Feeds({tag_name:"instalove",result:function(data){
+						console.log("Media from #instalove");
+						console.log(data);
+					}});
+				}});
+		//Some of endpoints can be requested with client_id!
+		//var api = new InstaJS({ client_id:"" });
+		///Search
+		/* 
+		api.Users.Search({q:"girgin",result:function(d){
+			console.log("Search users");
+			console.log(d);
+		}});
+		///Popular Media
+		api.Media.Popular({count:50,result:function(data){
+			console.log("Popular media on Instagram");
+			console.log(data);
+		}});
+		
+		api.Tags.Feeds({tag_name:"instalove",result:function(data){
+			console.log("Media from #instalove");
+			console.log(data);
+		}});*/
+	};
+</script>
+</head>
+
+<body></body>
+
+</html>
